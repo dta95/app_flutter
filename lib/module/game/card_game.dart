@@ -36,60 +36,69 @@ List<String>  isCheck =[];
     return Scaffold(
         appBar: AppBar(
           title: const Text('Card Game'),
+          centerTitle: true,
         ),
-      body: Column(
-
-        children: [
-          Container(height: 50,),
-          Expanded(
-            child: Container(
-                alignment: Alignment.center,
-                color: Colors.white,
-                child:  GridView.builder(
-                  itemCount: 12,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          
+          children: [
+            Container(height: 50,),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                  alignment: Alignment.center,
+                  child:  GridView.builder(
+                    itemCount: 12,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 5.0,
+                        mainAxisSpacing: 5.0
+                    ),
+                    itemBuilder: (BuildContext context, int index){
+                     return InkWell(
+                          onTap: items[index].showImage
+                              ? null: () async{
+                                    setState(() {
+                                      items[index].showImage = true;
+                                      isCheck.add(items[index].code);
+                                      count++;
+                                    });
+                                    if(checkPlay(count)==false){
+                                        await Future.delayed(const Duration(milliseconds: 500));
+                                        setState(() {
+                                        _resetPlay();
+                                        });
+                                    }
+                                },
+                       child:   AnimatedSwitcher(
+                         duration: const Duration(milliseconds: 4000),
+                         child: items[index].showImage ? itemShow(items[index].image): itemHide(),
+                       )
+                     );
+                    },
+                  )),
+            ),
+            SizedBox(
+              height: 60,
+              width: 140,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24), // <-- Radius
+                    ),
                   ),
-                  itemBuilder: (BuildContext context, int index){
-                   return InkWell(
-                        onTap: items[index].showImage
-                            ? null: () async{
-                                  setState(() {
-                                    items[index].showImage = true;
-                                    isCheck.add(items[index].code);
-                                    count++;
-                                  });
-                                  if(checkPlay(count)==false){
-                                      await Future.delayed(const Duration(milliseconds: 500));
-                                      setState(() {
-                                      _resetPlay();
-                                      });
-                                  }
-                              },
-                     child:   AnimatedSwitcher(
-                       duration: const Duration(milliseconds: 4000),
-                       child: items[index].showImage ?itemShow(items[index].image):
-                       itemHide(),
-                     )
-                   );
+                  onPressed: (){
+                      setState(() {
+                        _resetGame();
+                      },
+                      );
                   },
-                )),
-          ),
-          TextButton(
-              style:  ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
-              ),
-              onPressed: (){
-                  setState(() {
-                    _resetGame();
-                  },
-                  );
-              },
-              child: const Text('Reset',style: TextStyle(color: Colors.white),))
-        ],
+                  child: const Text('RESET',style: TextStyle(color: Colors.white,fontSize: 20),)),
+            ),
+            Container(height: 20,)
+          ],
+        ),
       ),
     );
   }
@@ -101,6 +110,7 @@ void  _resetPlay() {
   isCheck = [];
   count = 0;
 }
+
 void _resetGame() {
   for(int i=0;i<items.length;i++){
     items[i].showImage=false;
@@ -150,8 +160,8 @@ class Item{
 Widget itemShow( String image){
   return
     Container(
-        height: 100,
-        width: 100,
+        height: 120,
+        width: 120,
         decoration:  BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
@@ -163,15 +173,20 @@ Widget itemShow( String image){
 }
 Widget itemHide(){
   return   Container(
-    height: 100,
-    width: 100,
+    height: 120,
+    width: 120,
     decoration:  BoxDecoration(
       color: Colors.blue,
       borderRadius: BorderRadius.circular(10),
     ),
-    child: const Icon(
-      IconData(0xf00c1, fontFamily: 'MaterialIcons')
-    )
+    child:   const FractionallySizedBox(
+      widthFactor: 0.98,
+      heightFactor: 0.98,
+      child: Icon(
+        size: 40,
+          IconData(0xf00c1, fontFamily: 'MaterialIcons')
+      ),
+    ),
     );
 }
 

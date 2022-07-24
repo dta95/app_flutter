@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:app_flutter/login_screen.dart';
-import 'package:app_flutter/chess_game.dart';
-import 'package:app_flutter/card_game.dart';
+import 'package:app_flutter/module/login/login_screen.dart';
+import 'package:app_flutter/module/game/chess_game.dart';
+import 'package:app_flutter/module/game/card_game.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: CardGame(),
+      body: LoginScreen(),
     );
   }
 }
