@@ -1,7 +1,6 @@
 import 'package:app_flutter/module/login/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+import '../../helper/keyboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,18 +11,19 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: GestureDetector(
-          onTap: (){
+          onTap: () {
             hideKeyboardAndUnfocus(context);
           },
           child: Column(
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 30),
                   child: Column(
                     children: [
                       Container(
@@ -33,7 +33,8 @@ class LoginScreenState extends State<LoginScreen> {
                           width: 200,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/logostarcityvang.png'),
+                              image: AssetImage(
+                                  'assets/images/logostarcityvang.png'),
                               fit: BoxFit.cover,
                             ),
                           )),
@@ -47,25 +48,26 @@ class LoginScreenState extends State<LoginScreen> {
                               labelText: 'Tên Đăng Nhập',
                             ),
                           ),
-                          Container(height: 10),
+                          Container(height: 13),
                           TextField(
                             obscureText: _isObscure,
                             obscuringCharacter: "*",
-                            decoration:  InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              fillColor: Colors.white70,
-                              filled: true,
-                              labelText: 'Mật Khẩu',
-                              suffixIcon: IconButton(
-                                      icon: Icon(
-                                      _isObscure ? Icons.visibility : Icons.visibility_off),
-                                      onPressed: () {
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                fillColor: Colors.white70,
+                                filled: true,
+                                labelText: 'Mật Khẩu',
+                                suffixIcon: IconButton(
+                                    icon: Icon(
+                                        _isObscure ? Icons.visibility : Icons
+                                            .visibility_off),
+                                    onPressed: () {
                                       setState(() {
-                                      _isObscure = !_isObscure;
+                                        _isObscure = !_isObscure;
                                       });
-                              })
+                                    })
                             ),
                           ),
 
@@ -73,12 +75,17 @@ class LoginScreenState extends State<LoginScreen> {
                           Row(
                             children: [
                               Container(width: 30,),
-                              TextButton(onPressed: (){
+                              TextButton(onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                                  MaterialPageRoute(builder: (
+                                      context) => const RegisterScreen()),
                                 );
-                              }, child: const Text('Đăng Ký',style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500,))),
+                              },
+                                  child: const Text('Đăng Ký', style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,))),
                               const Spacer(),
                               Container(
                                 height: 50,
@@ -88,7 +95,10 @@ class LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(7),
                                   color: const Color(0xFF2D8076),
                                 ),
-                                child: const Text('Đăng Nhập',style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white ),),
+                                child: const Text('Đăng Nhập', style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),),
                               )
                             ],
                           ),
@@ -100,12 +110,13 @@ class LoginScreenState extends State<LoginScreen> {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: RichText(
-                    text:  const TextSpan(
+                    text: const TextSpan(
                       text: 'Hotline',
                       style: TextStyle(color: Color(0xFF000000),),
                       children: [
                         TextSpan(text: ' '),
-                        TextSpan(text: '0933338993', style: TextStyle(color: Color(0xFF2D8076))),
+                        TextSpan(text: '0933338993',
+                            style: TextStyle(color: Color(0xFF2D8076))),
                       ],
                     ),
                   )
@@ -117,13 +128,6 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void hideKeyboard(){
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-  }
-  void hideKeyboardAndUnfocus(BuildContext context) {
-    FocusScope.of(context).unfocus();
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-  }
 }
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../helper/keyboard.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 30),
                   child: Column(
                     children: [
                       Container(
@@ -135,10 +135,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
-void hideKeyboard(){
-  SystemChannels.textInput.invokeMethod('TextInput.hide');
-}
-void hideKeyboardAndUnfocus(BuildContext context) {
-  FocusScope.of(context).unfocus();
-  SystemChannels.textInput.invokeMethod('TextInput.hide');
-}
+

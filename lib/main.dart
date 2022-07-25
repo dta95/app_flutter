@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:app_flutter/module/login/login_screen.dart';
 import 'package:app_flutter/module/game/chess_game.dart';
 import 'package:app_flutter/module/game/card_game.dart';
+import 'module/account/account_screen.dart';
+import 'module/account/change_password_screen.dart';
+import 'module/account/contact_screen.dart';
+import 'module/account/menu.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -29,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: LoginScreen(),
+      body: ContactScreen(),
     );
   }
 }

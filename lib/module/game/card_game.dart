@@ -67,7 +67,7 @@ List<String>  isCheck =[];
                                     if(checkPlay(count)==false){
                                         await Future.delayed(const Duration(milliseconds: 500));
                                         setState(() {
-                                        _resetPlay();
+                                        resetPlay();
                                         });
                                     }
                                 },
@@ -90,7 +90,7 @@ List<String>  isCheck =[];
                   ),
                   onPressed: (){
                       setState(() {
-                        _resetGame();
+                        resetGame();
                       },
                       );
                   },
@@ -103,7 +103,7 @@ List<String>  isCheck =[];
     );
   }
 
-void  _resetPlay() {
+void  resetPlay() {
   for(int i=0;i<items.length;i++){
     items[i].showImage=false;
   }
@@ -111,7 +111,7 @@ void  _resetPlay() {
   count = 0;
 }
 
-void _resetGame() {
+void resetGame() {
   for(int i=0;i<items.length;i++){
     items[i].showImage=false;
   }
@@ -169,7 +169,6 @@ Widget itemShow( String image){
                 fit: BoxFit.cover
             ))
   );
-
 }
 Widget itemHide(){
   return   Container(
