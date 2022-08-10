@@ -11,6 +11,7 @@ class _CardGameState extends State<CardGame> {
 int count =0;
 List<Item> items=[];
 List<String>  isCheck =[];
+bool isLock = false;
 
 @override
   void initState(){
@@ -59,21 +60,26 @@ List<String>  isCheck =[];
                      return InkWell(
                           onTap: items[index].showImage
                               ? null: () async{
+                                    if(isLock){
+                                      return;
+                                    }
                                     setState(() {
                                       items[index].showImage = true;
                                       isCheck.add(items[index].code);
                                       count++;
+                                      print(count);
                                     });
                                     if(checkPlay(count)==false){
-                                        await Future.delayed(const Duration(milliseconds: 500));
-                                        setState(() {
+                                      isLock = true;
+                                      await Future.delayed(const Duration(milliseconds: 1000));
+                                      setState(() {
                                         resetPlay();
-                                        });
+                                      });
                                     }
                                 },
                        child:   AnimatedSwitcher(
-                         duration: const Duration(milliseconds: 4000),
-                         child: items[index].showImage ? itemShow(items[index].image): itemHide(),
+                         duration: const Duration(milliseconds: 300),
+                         child: items[index].showImage ? itemShow(items[index].image): itemHide(UniqueKey()),
                        )
                      );
                     },
@@ -103,12 +109,13 @@ List<String>  isCheck =[];
     );
   }
 
-void  resetPlay() {
+void resetPlay() {
   for(int i=0;i<items.length;i++){
     items[i].showImage=false;
   }
   isCheck = [];
   count = 0;
+  isLock = false;
 }
 
 void resetGame() {
@@ -118,6 +125,7 @@ void resetGame() {
   items.shuffle();
   isCheck = [];
   count = 0;
+  isLock = false;
 }
 bool checkPlay(int count){
   if(count<=3){
@@ -150,6 +158,12 @@ bool checkPlay(int count){
   }
   return true;
 }
+
+void lockOntap(){
+  for(int i=0;i<items.length;i++){
+    items[i].showImage=false;
+  }
+}
 }
 class Item{
   final String code ;
@@ -170,7 +184,7 @@ Widget itemShow( String image){
             ))
   );
 }
-Widget itemHide(){
+Widget itemHide(Key key){
   return   Container(
     height: 120,
     width: 120,

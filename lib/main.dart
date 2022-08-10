@@ -6,6 +6,7 @@ import 'module/account/account_screen.dart';
 import 'module/account/change_password_screen.dart';
 import 'module/account/contact_screen.dart';
 import 'module/account/menu.dart';
+import 'module/sync/sync.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: ContactScreen(),
+      body: LearnSync(),
     );
   }
 }
